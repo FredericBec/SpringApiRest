@@ -1,6 +1,7 @@
 package fr.fms.SpringApiRest.web;
 
 import fr.fms.SpringApiRest.entities.Training;
+import fr.fms.SpringApiRest.exception.RecordNotFoundException;
 import fr.fms.SpringApiRest.service.ImplTrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,11 +46,9 @@ public class TrainingController {
     }
 
     @GetMapping("/trainings/{id}")
-    public ResponseEntity<Training> getTrainingById(@PathVariable("id") Long id){
-        Optional<Training> training = implTrainingService.readTraining(id);
-        if(training.isPresent()){
-            return new ResponseEntity<>(training.get(), HttpStatus.OK);
-        }
-        return null;
+    public Training getTrainingById(@PathVariable("id") Long id){
+
+        return implTrainingService.readTraining(id)
+                .orElseThrow(() -> new RecordNotFoundException("Id de formation " + id + " n'existe pas"));
     }
 }
