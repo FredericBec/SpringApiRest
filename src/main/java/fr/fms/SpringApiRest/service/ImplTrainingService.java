@@ -30,7 +30,7 @@ public class ImplTrainingService implements ITrainingService {
     }
 
     @Override
-    public Optional<Training> readTraining(Long id) {
+    public Optional<Training> readTraining(Long id){
         return trainingRepository.findById(id);
     }
 }
