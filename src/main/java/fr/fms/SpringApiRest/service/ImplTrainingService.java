@@ -1,6 +1,8 @@
 package fr.fms.SpringApiRest.service;
 
+import fr.fms.SpringApiRest.dao.CategoryRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
+import fr.fms.SpringApiRest.entities.Category;
 import fr.fms.SpringApiRest.entities.Training;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ public class ImplTrainingService implements ITrainingService {
 
     @Autowired
     TrainingRepository trainingRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public List<Training> getTrainings() {
@@ -32,5 +37,20 @@ public class ImplTrainingService implements ITrainingService {
     @Override
     public Optional<Training> readTraining(Long id){
         return trainingRepository.findById(id);
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category saveCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
     }
 }
