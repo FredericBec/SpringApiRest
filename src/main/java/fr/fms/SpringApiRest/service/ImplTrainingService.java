@@ -25,6 +25,11 @@ public class ImplTrainingService implements ITrainingService {
     }
 
     @Override
+    public List<Training> getTrainingsByCategory(Long categoryId) {
+        return trainingRepository.findByCategoryId(categoryId);
+    }
+
+    @Override
     public Training saveTraining(Training training) {
         return trainingRepository.save(training);
     }
