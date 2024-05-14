@@ -26,6 +26,11 @@ public class TrainingController {
         return implTrainingService.getTrainings();
     }
 
+    @GetMapping("/trainings/category/{id}")
+    public List<Training> trainingsByCategory(@PathVariable("id") Long id){
+        return implTrainingService.getTrainingsByCategory(id);
+    }
+
     @PostMapping("/trainings")
     public ResponseEntity<Training> saveTraining(@RequestBody Training t){
         Training training = implTrainingService.saveTraining(t);
