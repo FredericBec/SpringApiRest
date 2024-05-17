@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -61,7 +63,29 @@ public class TrainingControllerTest {
                 .andExpect(status().isCreated())
                 .andReturn();
     }
+    @Test
+    public void testTrainingsByCategory() throws Exception {
+        Long categoryId = 1L;
+        List<Training> trainings = Arrays.asList(
+                new Training(1L, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, "java.png", null),
+                new Training(2L, "Spring", "Spring Framework sur 5 jours", 4000.0, 1, "spring.png", null)
+        );
+
+        when(implTrainingService.getTrainingsByCategory(categoryId)).thenReturn(trainings);
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/trainings/category/{id}", categoryId)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expectedJson = objectMapper.writeValueAsString(trainings);
+        String actualJson = result.getResponse().getContentAsString();
+
+        assertEquals(expectedJson, actualJson);
+    }
 }
+
 
 
 

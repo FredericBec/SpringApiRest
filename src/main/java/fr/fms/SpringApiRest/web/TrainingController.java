@@ -56,4 +56,6 @@ public class TrainingController {
         return implTrainingService.readTraining(id)
                 .orElseThrow(() -> new RecordNotFoundException("Id de formation " + id + " n'existe pas"));
     }
+
+
 }
