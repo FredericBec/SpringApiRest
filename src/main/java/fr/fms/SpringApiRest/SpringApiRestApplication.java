@@ -24,7 +24,7 @@ public class SpringApiRestApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//generateData();
+		generateData();
 	}
 
 	private void generateData(){
