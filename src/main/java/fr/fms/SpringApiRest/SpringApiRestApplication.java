@@ -24,18 +24,22 @@ public class SpringApiRestApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		generateData();
+		generateData();
 	}
 
-	private void generateData(){
-		Category program = new Category(null, "Language de programmation", null);
-		Category application = new Category(null, "Application", null);
+	private void generateData()
+	{
+
+		Category program = new Category(null, "Devellopement Web", null);
+		Category logiciel = new Category(null, "Logiciel", null);
+		Category Cybersecu = new Category(null, "Cybersecurite", null);
 		categoryRepository.save(program);
-		categoryRepository.save(application);
+		categoryRepository.save(logiciel);
+		categoryRepository.save(Cybersecu);
 		trainingRepository.save(new Training(null, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, "java.png", program));
-		trainingRepository.save(new Training(null, "DotNet", "DotNet & entityframework en 5 jours", 2750.0, 1, "dotnet_logo_icon_170223.png", program));
-		trainingRepository.save(new Training(null, "PowerBi", "Business Intelligence 5 jours", 3000.0, 1, "Power-BI-Logo-700x394.png", application));
+		trainingRepository.save(new Training(null, "DotNet", "DotNet & entityframework en 5 jours", 2750.0, 1, "dotnet_logo_icon_170223.png", logiciel));
+		trainingRepository.save(new Training(null, "PowerBi", "Business Intelligence 5 jours", 3000.0, 1, "Power-BI-Logo-700x394.png", logiciel));
 		trainingRepository.save(new Training(null, "NodeJs", "Prise en main de NodeJs/Express 2 jours", 1400.0, 1, "node-js.png", program));
-		trainingRepository.save(new Training(null, "Php", "Initiation au Dev/Web avec hp 4 jours", 1300.0, 1, "PHP-logo.svg.png", program));
+		trainingRepository.save(new Training(null, "Php", "Initiation au Dev/Web avec hp 4 jours", 1300.0, 1, "PHP-logo.svg.png",Cybersecu));
 	}
 }
