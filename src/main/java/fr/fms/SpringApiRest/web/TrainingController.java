@@ -46,8 +46,9 @@ public class TrainingController {
     }
 
     @DeleteMapping("/trainings/{id}")
-    public void deleteTraining(@PathVariable("id") Long id){
+    public ResponseEntity<Void>deleteTraining(@PathVariable("id") Long id){
         implTrainingService.deleteTraining(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/trainings/{id}")

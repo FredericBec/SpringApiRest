@@ -23,8 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,7 +83,18 @@ public class TrainingControllerTest {
 
         assertEquals(expectedJson, actualJson);
     }
+
+    @Test
+    public void testDeleteTraining() throws Exception {
+        Long trainingId = 1L;
+
+        doNothing().when(implTrainingService).deleteTraining(trainingId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/trainings/{id}", trainingId))
+                .andExpect(status().isNoContent());
+    }
 }
+
 
 
 
