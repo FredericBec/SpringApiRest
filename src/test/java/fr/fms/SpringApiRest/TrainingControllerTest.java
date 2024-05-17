@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -92,6 +93,16 @@ public class TrainingControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/trainings/{id}", trainingId))
                 .andExpect(status().isNoContent());
+    }
+    @Test
+    public void testGetTrainingByIdNotFound() throws Exception {
+        Long trainingId = 1L;
+
+        when(implTrainingService.readTraining(trainingId)).thenReturn(Optional.empty());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/trainings/{id}", trainingId)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
 
