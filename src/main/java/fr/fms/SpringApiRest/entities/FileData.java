@@ -1,10 +1,6 @@
 package fr.fms.SpringApiRest.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
 
 @Entity
@@ -21,4 +17,15 @@ public class FileData
     private String type;
 
     private String filePath;
+
+    @ManyToOne
+    private Training training;
+
+    public FileData ( Long id , String name , String type , String filePath)
+    {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.filePath = filePath;
+    }
 }

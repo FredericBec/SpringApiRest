@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
@@ -18,9 +19,21 @@ public class Training implements Serializable {
     private String description;
     private double price;
     private int quantity;
-    private String image;
+
+    @OneToMany(mappedBy = "training")
+    private Collection<FileData> fileData;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "trainings")
     private Category category;
+
+    public Training ( Long id , String name , String description , double price , int quantity , Category category)
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+    }
 }
