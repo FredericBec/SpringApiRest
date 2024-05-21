@@ -5,7 +5,6 @@ import fr.fms.SpringApiRest.entities.FileData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -44,4 +43,24 @@ public class StorageService
         byte[] images = Files.readAllBytes(new File(filePath).toPath());
         return images;
     }
+
+    public byte[] downloadImageId(Long id) throws IOException {
+        Optional<FileData> fileData = fileDataRepository.findById(id);
+        String filePath = fileData.get().getFilePath();
+        byte[] images = Files.readAllBytes(new File(filePath).toPath());
+        return images;
+    }
+
+//    public byte[] downloadAllImage() throws IOException {
+//        List<FileData> fileData = fileDataRepository.findAll();
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//
+//        for(FileData data : fileData)
+//        {
+//            String filePath = fileData.get(data.getId()).getFilePath();
+//            byte[] images = Files.readAllBytes(new File(filePath).toPath());
+//            outputStream.write(images);
+//        }
+//        return outputStream.toByteArray();
+//    }
 }

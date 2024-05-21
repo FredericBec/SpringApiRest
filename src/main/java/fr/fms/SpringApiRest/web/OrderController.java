@@ -4,14 +4,11 @@ package fr.fms.SpringApiRest.web;
 import fr.fms.SpringApiRest.entities.Customer;
 import fr.fms.SpringApiRest.entities.Order;
 import fr.fms.SpringApiRest.entities.OrderItem;
-import fr.fms.SpringApiRest.entities.Training;
 import fr.fms.SpringApiRest.service.ImplBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.Date;
 import java.util.Objects;

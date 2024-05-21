@@ -18,14 +18,10 @@ public class FileData
 
     private String filePath;
 
-    @ManyToOne
-    private Training training;
+//    @OneToMany(mappedBy = "fileData") // error liaison dans ce sens
+//    @ToString.Exclude
+//    @JsonIgnoreProperties
+//    private Collection<Training> trainings;
 
-    public FileData ( Long id , String name , String type , String filePath)
-    {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.filePath = filePath;
-    }
+
 }

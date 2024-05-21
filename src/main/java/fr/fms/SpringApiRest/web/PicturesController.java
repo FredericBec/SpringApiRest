@@ -1,5 +1,6 @@
 package fr.fms.SpringApiRest.web;
 
+import fr.fms.SpringApiRest.entities.FileData;
 import fr.fms.SpringApiRest.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class PicturesController
     private StorageService storageService;
 
     @PostMapping("/fileSystem")
-    public ResponseEntity<?> uploadImageToSystem (@RequestParam("image")MultipartFile file) throws IOException
+    public ResponseEntity<?> uploadImageToSystem (@RequestParam("image") MultipartFile file) throws IOException
     {
         String uploadImage = storageService.uploadImage(file);
         return ResponseEntity.status(HttpStatus.OK)
@@ -34,4 +35,15 @@ public class PicturesController
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
     }
+
+//    @GetMapping("/fileSystems/{id}")
+//    public ResponseEntity<?> findPictureId(@PathVariable Long id) throws IOException
+//    {
+//        byte[] imageData = storageService.downloadImageId(id);
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .contentType(MediaType.valueOf("image/png"))
+//                .body(imageData);
+//    }
+
+
 }
