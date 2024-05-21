@@ -7,6 +7,7 @@ import fr.fms.SpringApiRest.entities.OrderItem;
 import fr.fms.SpringApiRest.entities.Training;
 import fr.fms.SpringApiRest.service.ImplBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,9 +26,9 @@ public class OrderController {
     private ImplBusinessService implBusinessService;
 
     @PostMapping("/customer")
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customerBody){
+    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customerBody) {
         Customer customer = implBusinessService.saveCustomer(customerBody);
-        if(Objects.isNull(customer)){
+        if (Objects.isNull(customer)) {
             return ResponseEntity.noContent().build();
         }
         URI location = ServletUriComponentsBuilder
@@ -39,9 +40,9 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<Order> saveOrder(@RequestBody Order orderBody){
+        public ResponseEntity<Order> saveOrder(@RequestBody Order orderBody){
         Order order = implBusinessService.saveOrder(new Order(null, new Date(), orderBody.getTotalAmount(), orderBody.getCustomer(), null));
-        if(Objects.isNull(order)){
+        if (Objects.isNull(order)) {
             return ResponseEntity.noContent().build();
         }
         URI location = ServletUriComponentsBuilder
@@ -51,6 +52,7 @@ public class OrderController {
                 .toUri();
         return ResponseEntity.created(location).build();
     }
+
 
     @PostMapping("/orderItem")
     public ResponseEntity<OrderItem> saveOrderItem(@RequestBody OrderItem orderItemBody){

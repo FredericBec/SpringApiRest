@@ -21,6 +21,12 @@ public class Order {
     @ManyToOne
     private Customer customer;
 
+
     @OneToMany(mappedBy = "order")
     private Collection<OrderItem> orderItems;
+
+
+    public Collection<OrderItem> getItems() {
+        return orderItems;
+    }
 }
