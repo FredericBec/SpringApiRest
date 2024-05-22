@@ -1,8 +1,9 @@
 package fr.fms.SpringApiRest.web;
 
-import fr.fms.SpringApiRest.entities.FileData;
 import fr.fms.SpringApiRest.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 public class PicturesController
 {
+    private final StorageService storageService;
+
     @Autowired
-    private StorageService storageService;
+    public PicturesController ( StorageService storageService)
+    {
+        this.storageService = storageService;
+    }
 
     @PostMapping("/fileSystem")
     public ResponseEntity<?> uploadImageToSystem (@RequestParam("image") MultipartFile file) throws IOException
@@ -36,6 +43,8 @@ public class PicturesController
                 .body(imageData);
     }
 
+
+
 //    @GetMapping("/fileSystems/{id}")
 //    public ResponseEntity<?> findPictureId(@PathVariable Long id) throws IOException
 //    {
@@ -45,5 +54,19 @@ public class PicturesController
 //                .body(imageData);
 //    }
 
+    @GetMapping("/{filename:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
+        Resource image = storageService.loadImage(filename);
+        String contentType;
+        try {
+            contentType = Files.probeContentType(image.getFile().toPath());
+        } catch (IOException ex) {
+            contentType = "application/octet-stream";
+        }
 
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"")
+                .body(image);
+    }
 }
