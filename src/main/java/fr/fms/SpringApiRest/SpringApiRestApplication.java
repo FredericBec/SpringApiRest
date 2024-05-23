@@ -1,10 +1,8 @@
 package fr.fms.SpringApiRest;
 
 import fr.fms.SpringApiRest.dao.CategoryRepository;
-import fr.fms.SpringApiRest.dao.FileDataRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
 import fr.fms.SpringApiRest.entities.Category;
-import fr.fms.SpringApiRest.entities.FileData;
 import fr.fms.SpringApiRest.entities.Training;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,9 +18,6 @@ public class SpringApiRestApplication implements CommandLineRunner {
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	@Autowired
-	FileDataRepository fileDataRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(SpringApiRestApplication.class, args);
 	}
@@ -34,23 +29,19 @@ public class SpringApiRestApplication implements CommandLineRunner {
 
 	private void generateData()
 	{
-		Category program = new Category(null, "Devellopement Web", null);
-		Category logiciel = new Category(null, "Logiciel", null);
-		Category Cybersecu = new Category(null, "Cybersecurite", null);
-
-		categoryRepository.save(program);
-		categoryRepository.save(logiciel);
-		categoryRepository.save(Cybersecu);
+		Category program = categoryRepository.save(new Category(null, "Devellopement Web", null));
+		Category logiciel = categoryRepository.save(new Category(null, "Logiciel", null));
+		Category Cybersecu = categoryRepository.save(new Category(null, "Cybersecurite", null));
 
 		trainingRepository.save(new Training(null, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, "java.png" , program));
-		trainingRepository.save(new Training(null, "DotNet", "DotNet & entityframework en 5 jours", 2750.0, 1,  null , logiciel));
+		trainingRepository.save(new Training(null, "DotNet", "DotNet & entityframework en 5 jours", 2750.0, 1,  "dotnet.png" , logiciel));
 		trainingRepository.save(new Training(null, "PowerBi", "Business Intelligence 5 jours", 3000.0, 1, null , logiciel));
-		trainingRepository.save(new Training(null, "NodeJs", "Prise en main de NodeJs/Express 2 jours", 1400.0, 1, null  , program));
-		trainingRepository.save(new Training(null, "Php", "Initiation au Dev/Web avec hp 4 jours", 1300.0, 1, "php.png"  , Cybersecu));
-		trainingRepository.save(new Training(null, "Javascript", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, "javascript.png" , program));
-		trainingRepository.save(new Training(null, "rust", "DotNet & entityframework en 5 jours", 2750.0, 1,  null , logiciel));
-		trainingRepository.save(new Training(null, "swift", "Business Intelligence 5 jours", 3000.0, 1, null  , logiciel));
-		trainingRepository.save(new Training(null, "API", "Prise en main de NodeJs/Express 2 jours", 1400.0, 1, null  , program));
-		trainingRepository.save(new Training(null, "spring", "Initiation au Dev/Web avec hp 4 jours", 1300.0, 1, "php.png"   , Cybersecu));
+		trainingRepository.save(new Training(null, "NodeJs", "Prise en main de NodeJs/Express 2 jours", 1400.0, 1, "node.png"  , program));
+		trainingRepository.save(new Training(null, "Php", "Initiation au Dev/Web avec hp 4 jours", 1300.0, 1, "php.png"  , program));
+		trainingRepository.save(new Training(null, "Javascript", "Java Standard Edition 8 sur 5 jours", 5500.0, 1, "javascript.png" , program));
+		trainingRepository.save(new Training(null, "Rust", "DotNet & entityframework en 5 jours", 2150.0, 1,  null , logiciel));
+		trainingRepository.save(new Training(null, "Swift", "Business Intelligence 5 jours", 3010.0, 1, "swift.png"  , logiciel));
+		trainingRepository.save(new Training(null, "API", "Prise en main de NodeJs/Express 2 jours", 1420.0, 1, null  , Cybersecu));
+		trainingRepository.save(new Training(null, "Spring", "Initiation au Dev/Web avec hp 4 jours", 1350.0, 1, null   , Cybersecu));
 	}
 }

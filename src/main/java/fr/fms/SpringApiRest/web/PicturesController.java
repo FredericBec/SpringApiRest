@@ -1,5 +1,7 @@
 package fr.fms.SpringApiRest.web;
 
+import fr.fms.SpringApiRest.entities.Training;
+import fr.fms.SpringApiRest.service.ImplTrainingService;
 import fr.fms.SpringApiRest.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -19,19 +22,13 @@ import java.nio.file.Files;
 public class PicturesController
 {
     private final StorageService storageService;
+    private final ImplTrainingService implTrainingService;
 
     @Autowired
-    public PicturesController ( StorageService storageService)
+    public PicturesController ( StorageService storageService , ImplTrainingService implTrainingService)
     {
         this.storageService = storageService;
-    }
-
-    @PostMapping("/fileSystem")
-    public ResponseEntity<?> uploadImageToSystem (@RequestParam("image") MultipartFile file) throws IOException
-    {
-        String uploadImage = storageService.uploadImage(file);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(uploadImage);
+        this.implTrainingService = implTrainingService;
     }
 
     @GetMapping("/fileSystem/{fileName}")
@@ -68,5 +65,18 @@ public class PicturesController
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"")
                 .body(image);
+    }
+
+    @PostMapping("/upload/{idTraining}")
+    public ResponseEntity<?> uploadImageToSystem (@PathVariable Long idTraining ,@RequestParam("image") MultipartFile file) throws IOException
+    {
+        Optional<Training> trainng = implTrainingService.readTraining(idTraining);
+        if(trainng.isPresent())
+        {
+            trainng.get().setImageName(file.getOriginalFilename());
+        }
+        String uploadImage = storageService.uploadImage(file);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(uploadImage);
     }
 }
