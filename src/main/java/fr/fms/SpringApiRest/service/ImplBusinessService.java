@@ -35,12 +35,16 @@ public class ImplBusinessService implements IBusinessService {
 
     @Override
     public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+        if (order.getCustomer() != null && order.getCustomer().getId() == null) {
+        Customer savedCustomer = customerRepository.save(order.getCustomer());
+        order.setCustomer(savedCustomer);
     }
+        return orderRepository.save(order);
+}
 
     @Override
-    public Order getOrder(Customer customer) {
-        return orderRepository.findByCustomerIdOrderByIdDesc(customer.getId());
+    public Order getOrder(Long id) {
+        return orderRepository.findByCustomerIdOrderByIdDesc(id);
     }
 
     @Override

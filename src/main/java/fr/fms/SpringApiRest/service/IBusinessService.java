@@ -9,6 +9,6 @@ public interface IBusinessService {
     Customer saveCustomer(Customer customer);
     Customer getCustomerById(Long customerId);
     Order saveOrder(Order order);
-    Order getOrder(Customer customer);
+    Order getOrder(Long id);
     OrderItem saveOrderItem(OrderItem orderItem);
 }

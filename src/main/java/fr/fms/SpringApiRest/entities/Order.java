@@ -19,6 +19,7 @@ public class Order {
     private double totalAmount;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order")
