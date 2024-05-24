@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
@@ -80,3 +81,12 @@ public class PicturesController
                 .body(uploadImage);
     }
 }
+
+//    public void homeDir()
+//    {
+//        String userHomeDir = System.getProperty("user.home");
+//        System.out.println(userHomeDir);
+//
+//        String specificPath = userHomeDir + File.separator + "imagesAPI" + File.separator + "myFile.txt";
+//        System.out.println(specificPath);
+//    }

@@ -72,3 +72,14 @@ public class StorageService
         }
     }
 }
+
+//public class UserHomeDir {
+//    public static void main(String[] args) {
+//        String userHomeDir = System.getProperty("user.home");
+//        System.out.println(userHomeDir);
+//
+//        // Si vous voulez accéder à un fichier ou un dossier spécifique dans le répertoire de l'utilisateur
+//        String specificPath = userHomeDir + File.separator + "myFolder" + File.separator + "myFile.txt";
+//        System.out.println(specificPath);
+//    }
+//}
