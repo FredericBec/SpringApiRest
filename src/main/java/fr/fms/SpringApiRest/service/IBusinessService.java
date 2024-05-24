@@ -12,8 +12,5 @@ public interface IBusinessService {
     Customer getCustomerById(Long customerId);
     Order saveOrder(Order order);
     Order getOrder(Long id);
-
-    List<Order> getOrdersByCustomerId(Long customerId);
-
     OrderItem saveOrderItem(OrderItem orderItem);
 }

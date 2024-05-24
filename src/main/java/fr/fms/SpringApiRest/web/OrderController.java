@@ -76,18 +76,11 @@ public class OrderController {
                 .toUri();
         return ResponseEntity.created(location).build();
     }
-    @GetMapping("/orderItems/{orderId}")
-    public List<OrderItem> getOrderItemsByOrderId(@PathVariable("orderId") Long orderId) {
-        return orderItemRepository.findByOrderId(orderId);
-    }
+
 
     @GetMapping("/order/{id}")
     public Order getOrderByCustomerId(@PathVariable("id")Long id){
         return implBusinessService.getOrder(id);
     }
 
-    @GetMapping("/customer/{id}")
-    public Customer getCustomer(@PathVariable("id") Long id){
-        return implBusinessService.getCustomerById(id);
-    }
 }
