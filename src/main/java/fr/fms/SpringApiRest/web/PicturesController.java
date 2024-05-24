@@ -68,12 +68,12 @@ public class PicturesController
     }
 
     @PostMapping("/upload/{idTraining}")
-    public ResponseEntity<?> uploadImageToSystem (@PathVariable Long idTraining ,@RequestParam("image") MultipartFile file) throws IOException
+    public ResponseEntity<?> uploadImageToSystem (@PathVariable Long idTraining , @RequestParam("file") MultipartFile file) throws IOException
     {
-        Optional<Training> trainng = implTrainingService.readTraining(idTraining);
-        if(trainng.isPresent())
+        Optional<Training> training = implTrainingService.readTraining(idTraining);
+        if(training.isPresent())
         {
-            trainng.get().setImageName(file.getOriginalFilename());
+            training.get().setImageName(file.getOriginalFilename());
         }
         String uploadImage = storageService.uploadImage(file);
         return ResponseEntity.status(HttpStatus.OK)

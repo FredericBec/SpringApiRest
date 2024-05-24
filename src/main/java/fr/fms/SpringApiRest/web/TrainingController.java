@@ -22,10 +22,6 @@ public class TrainingController {
     @GetMapping("/trainings")
     public List<Training> allTrainings(){
         List <Training> lT = implTrainingService.getTrainings();
-        for(Training train : lT)
-        {
-            System.out.println(train.getImageName());
-        }
         return implTrainingService.getTrainings();
     }
 

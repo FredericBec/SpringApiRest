@@ -58,19 +58,6 @@ public class StorageService
         return images;
     }
 
-//    public byte[] downloadAllImage() throws IOException {
-//        List<FileData> fileData = fileDataRepository.findAll();
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//
-//        for(FileData data : fileData)
-//        {
-//            String filePath = fileData.get(data.getId()).getFilePath();
-//            byte[] images = Files.readAllBytes(new File(filePath).toPath());
-//            outputStream.write(images);
-//        }
-//        return outputStream.toByteArray();
-//    }
-
     public Resource loadImage(String filename) {
         try {
             Path filePath = Paths.get(imagesPath).resolve(filename).normalize();
