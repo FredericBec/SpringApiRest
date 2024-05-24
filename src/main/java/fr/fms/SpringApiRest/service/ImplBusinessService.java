@@ -9,6 +9,7 @@ import fr.fms.SpringApiRest.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,9 +47,16 @@ public class ImplBusinessService implements IBusinessService {
     public Order getOrder(Long id) {
         return orderRepository.findByCustomerIdOrderByIdDesc(id);
     }
+    @Override
+    public List<Order> getOrdersByCustomerId(Long customerId) {
+        return orderRepository.findByCustomerId(customerId);
+    }
 
     @Override
     public OrderItem saveOrderItem(OrderItem orderItem) {
         return orderItemRepository.save(orderItem);
     }
 }
+
+
+

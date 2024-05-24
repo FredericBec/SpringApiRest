@@ -4,11 +4,16 @@ import fr.fms.SpringApiRest.entities.Customer;
 import fr.fms.SpringApiRest.entities.Order;
 import fr.fms.SpringApiRest.entities.OrderItem;
 
+import java.util.List;
+
 public interface IBusinessService {
 
     Customer saveCustomer(Customer customer);
     Customer getCustomerById(Long customerId);
     Order saveOrder(Order order);
     Order getOrder(Long id);
+
+    List<Order> getOrdersByCustomerId(Long customerId);
+
     OrderItem saveOrderItem(OrderItem orderItem);
 }

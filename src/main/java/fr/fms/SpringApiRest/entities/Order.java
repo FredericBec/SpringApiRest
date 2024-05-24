@@ -1,5 +1,6 @@
 package fr.fms.SpringApiRest.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnoreProperties(value = "orders" )
     private Customer customer;
 
     @OneToMany(mappedBy = "order")

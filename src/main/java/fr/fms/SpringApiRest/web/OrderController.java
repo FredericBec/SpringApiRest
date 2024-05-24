@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @CrossOrigin("*")
@@ -62,9 +63,6 @@ public class OrderController {
             return ResponseEntity.created(location).body(order);
         }
 
-
-
-
     @PostMapping("/orderItem")
     public ResponseEntity<OrderItem> saveOrderItem(@RequestBody OrderItem orderItemBody){
         OrderItem orderItem = implBusinessService.saveOrderItem(orderItemBody);
@@ -77,6 +75,10 @@ public class OrderController {
                 .buildAndExpand(orderItem.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
+    }
+    @GetMapping("/orderItems/{orderId}")
+    public List<OrderItem> getOrderItemsByOrderId(@PathVariable("orderId") Long orderId) {
+        return orderItemRepository.findByOrderId(orderId);
     }
 
     @GetMapping("/order/{id}")
