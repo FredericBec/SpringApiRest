@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
@@ -31,26 +30,6 @@ public class PicturesController
         this.storageService = storageService;
         this.implTrainingService = implTrainingService;
     }
-
-    @GetMapping("/fileSystem/{fileName}")
-    public ResponseEntity<?> downloadImageToSystem (@PathVariable String fileName) throws IOException
-    {
-        byte[] imageData = storageService.downloadImage(fileName);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(imageData);
-    }
-
-
-
-//    @GetMapping("/fileSystems/{id}")
-//    public ResponseEntity<?> findPictureId(@PathVariable Long id) throws IOException
-//    {
-//        byte[] imageData = storageService.downloadImageId(id);
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .contentType(MediaType.valueOf("image/png"))
-//                .body(imageData);
-//    }
 
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
@@ -81,12 +60,3 @@ public class PicturesController
                 .body(uploadImage);
     }
 }
-
-//    public void homeDir()
-//    {
-//        String userHomeDir = System.getProperty("user.home");
-//        System.out.println(userHomeDir);
-//
-//        String specificPath = userHomeDir + File.separator + "imagesAPI" + File.separator + "myFile.txt";
-//        System.out.println(specificPath);
-//    }

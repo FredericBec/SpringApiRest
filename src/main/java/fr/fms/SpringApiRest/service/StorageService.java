@@ -11,10 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 @Service
 public class StorageService
@@ -44,20 +42,6 @@ public class StorageService
         return null;
     }
 
-    public byte[] downloadImage(String fileName) throws IOException {
-        Optional<FileData> fileData = fileDataRepository.findByName(fileName);
-        String filePath = fileData.get().getFilePath();
-        byte[] images = Files.readAllBytes(new File(filePath).toPath());
-        return images;
-    }
-
-    public byte[] downloadImageId(Long id) throws IOException {
-        Optional<FileData> fileData = fileDataRepository.findById(id);
-        String filePath = fileData.get().getFilePath();
-        byte[] images = Files.readAllBytes(new File(filePath).toPath());
-        return images;
-    }
-
     public Resource loadImage(String filename) {
         try {
             Path filePath = Paths.get(imagesPath).resolve(filename).normalize();
@@ -72,14 +56,3 @@ public class StorageService
         }
     }
 }
-
-//public class UserHomeDir {
-//    public static void main(String[] args) {
-//        String userHomeDir = System.getProperty("user.home");
-//        System.out.println(userHomeDir);
-//
-//        // Si vous voulez accéder à un fichier ou un dossier spécifique dans le répertoire de l'utilisateur
-//        String specificPath = userHomeDir + File.separator + "myFolder" + File.separator + "myFile.txt";
-//        System.out.println(specificPath);
-//    }
-//}
