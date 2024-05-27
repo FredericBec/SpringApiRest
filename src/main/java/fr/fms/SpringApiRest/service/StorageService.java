@@ -17,13 +17,14 @@ import java.nio.file.Paths;
 @Service
 public class StorageService
 {
-    @Value("${external.images.path}")
-    private String imagesPath;
+
+    private String imagesPath = System.getProperty("user.home") + File.separator + "Pictures" +
+                                                                  File.separator + "trainings";
 
     @Autowired
     private FileDataRepository fileDataRepository;
 
-    private final Path FOLDER_PATH = Paths.get("imagesApi/").toAbsolutePath().normalize();
+    private final Path FOLDER_PATH = Paths.get("imagesAPI/").toAbsolutePath().normalize();
 
     public String uploadImage (MultipartFile file) throws IOException
     {
@@ -45,8 +46,10 @@ public class StorageService
     public Resource loadImage(String filename) {
         try {
             Path filePath = Paths.get(imagesPath).resolve(filename).normalize();
+            System.out.println(filePath);
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
+                System.out.println(resource);
                 return resource;
             } else {
                 throw new RuntimeException("Image not found or not readable: " + filename);
