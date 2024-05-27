@@ -83,4 +83,8 @@ public class OrderController {
         return implBusinessService.getOrder(id);
     }
 
+    @GetMapping("/customer/{id}")
+    public Customer getCustomer(@PathVariable("id") Long id){
+        return implBusinessService.getCustomerById(id);
+    }
 }
