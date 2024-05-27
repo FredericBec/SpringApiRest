@@ -24,11 +24,9 @@ public class StorageService
     @Autowired
     private FileDataRepository fileDataRepository;
 
-    private final Path FOLDER_PATH = Paths.get("imagesAPI/").toAbsolutePath().normalize();
-
     public String uploadImage (MultipartFile file) throws IOException
     {
-        String filePath = FOLDER_PATH.resolve(file.getOriginalFilename()).toString() ;
+        String filePath = Paths.get(imagesPath).resolve(file.getOriginalFilename()).toString() ;
         FileData fileData = fileDataRepository.save(FileData.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
@@ -46,10 +44,8 @@ public class StorageService
     public Resource loadImage(String filename) {
         try {
             Path filePath = Paths.get(imagesPath).resolve(filename).normalize();
-            System.out.println(filePath);
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
-                System.out.println(resource);
                 return resource;
             } else {
                 throw new RuntimeException("Image not found or not readable: " + filename);
