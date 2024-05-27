@@ -17,11 +17,4 @@ public class FileData
     private String type;
 
     private String filePath;
-
-//    @OneToMany(mappedBy = "fileData") // error liaison dans ce sens
-//    @ToString.Exclude
-//    @JsonIgnoreProperties
-//    private Collection<Training> trainings;
-
-
 }
