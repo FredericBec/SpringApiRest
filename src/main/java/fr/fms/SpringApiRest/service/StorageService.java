@@ -3,7 +3,6 @@ package fr.fms.SpringApiRest.service;
 import fr.fms.SpringApiRest.dao.FileDataRepository;
 import fr.fms.SpringApiRest.entities.FileData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -18,9 +17,8 @@ import java.nio.file.Paths;
 public class StorageService
 {
 
-    private String imagesPath = System.getProperty("user.home") + File.separator + "Pictures" +
-                                                                  File.separator + "trainings";
-
+    private String imagesPath = System.getProperty("user.home") + File.separator + "Pictures"
+                                                                + File.separator + "trainings";
     @Autowired
     private FileDataRepository fileDataRepository;
 
