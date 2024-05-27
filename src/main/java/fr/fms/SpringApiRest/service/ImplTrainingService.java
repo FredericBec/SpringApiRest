@@ -58,4 +58,5 @@ public class ImplTrainingService implements ITrainingService {
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
+
 }

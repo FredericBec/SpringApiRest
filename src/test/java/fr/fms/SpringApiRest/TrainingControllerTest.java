@@ -25,7 +25,8 @@ public class TrainingControllerTest {
     private ImplTrainingService implTrainingService;
 
     @Test
-    public void testGetTrainings() throws Exception{
+    public void testGetTrainings() throws Exception
+    {
         mockMvc.perform(get("/api/trainings"))
                 .andExpect(status().isOk());
     }
