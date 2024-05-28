@@ -55,4 +55,24 @@ public class TrainingController {
         return implTrainingService.readTraining(id)
                 .orElseThrow(() -> new RecordNotFoundException("Id de formation " + id + " n'existe pas"));
     }
+
+    @PutMapping("/trainings/{id}")
+    public ResponseEntity<Training> updateTraining(@PathVariable("id") Long id, @RequestBody Training trainingBody){
+        Training trainingExisting = implTrainingService.readTraining(id).orElseThrow(() -> new RecordNotFoundException("Id de formation " + id + " n'existe pas"));
+        trainingExisting.setName(trainingBody.getName());
+        trainingExisting.setDescription(trainingBody.getDescription());
+        trainingExisting.setPrice(trainingBody.getPrice());
+        trainingExisting.setCategory(trainingBody.getCategory());
+        trainingExisting.setImageName(trainingBody.getImageName());
+        Training training = implTrainingService.saveTraining(trainingExisting);
+        if(Objects.isNull(training)){
+            return ResponseEntity.noContent().build();
+        }
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(training.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
+    }
 }
