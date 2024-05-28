@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -42,6 +43,23 @@ public class TrainingController {
                 .buildAndExpand(training.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Training> updateTraining(@PathVariable("id") Long id , @RequestBody Training t){
+        Optional<Training> training = implTrainingService.readTraining(id);
+        System.out.println(training);
+        if(training.isPresent())
+        {
+            Training train = training.get();
+            train.setDescription(t.getDescription());
+            train.setName(t.getName());
+            train.setPrice(t.getPrice());
+            implTrainingService.saveTraining(train);
+            return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne un statut 404 Not Found si l'entité n'est pas trouvée
+        }
     }
 
     @DeleteMapping("/trainings/{id}")
