@@ -59,4 +59,6 @@ public class ImplTrainingService implements ITrainingService {
         categoryRepository.deleteById(id);
     }
 
+    @Override
+    public Optional<Category> findCatById(Long id) { return categoryRepository.findById(id); }
 }

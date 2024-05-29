@@ -14,4 +14,5 @@ public interface ITrainingService {
     List<Category> getCategories();
     Category saveCategory(Category category);
     void deleteCategory(Long id);
+    Optional<Category> findCatById(Long id);
 }

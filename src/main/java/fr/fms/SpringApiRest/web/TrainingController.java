@@ -42,7 +42,7 @@ public class TrainingController {
                 .path("/{id}")
                 .buildAndExpand(training.getId())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(training);
     }
 
     @PostMapping("/update/{id}")
@@ -55,6 +55,7 @@ public class TrainingController {
             train.setDescription(t.getDescription());
             train.setName(t.getName());
             train.setPrice(t.getPrice());
+            train.setCategory(t.getCategory());
             implTrainingService.saveTraining(train);
             return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
         } else {

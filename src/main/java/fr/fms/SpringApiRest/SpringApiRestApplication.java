@@ -35,13 +35,13 @@ public class SpringApiRestApplication implements CommandLineRunner {
 
 		trainingRepository.save(new Training(null, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, "java.png" , program));
 		trainingRepository.save(new Training(null, "DotNet", "DotNet & entityframework en 5 jours", 2750.0, 1,  "dotnet.png" , logiciel));
-		trainingRepository.save(new Training(null, "PowerBi", "Business Intelligence 5 jours", 3000.0, 1, null , logiciel));
+		trainingRepository.save(new Training(null, "PowerBi", "Business Intelligence 5 jours", 3000.0, 1, "" , logiciel));
 		trainingRepository.save(new Training(null, "NodeJs", "Prise en main de NodeJs/Express 2 jours", 1400.0, 1, "node.png"  , program));
 		trainingRepository.save(new Training(null, "Php", "Initiation au Dev/Web avec hp 4 jours", 1300.0, 1, "php.png"  , program));
 		trainingRepository.save(new Training(null, "Javascript", "Java Standard Edition 8 sur 5 jours", 5500.0, 1, "javascript.png" , program));
-		trainingRepository.save(new Training(null, "Rust", "DotNet & entityframework en 5 jours", 2150.0, 1,  null , logiciel));
+		trainingRepository.save(new Training(null, "Rust", "DotNet & entityframework en 5 jours", 2150.0, 1,  "" , logiciel));
 		trainingRepository.save(new Training(null, "Swift", "Business Intelligence 5 jours", 3010.0, 1, "swift.png"  , logiciel));
-		trainingRepository.save(new Training(null, "API", "Prise en main de NodeJs/Express 2 jours", 1420.0, 1, null  , Cybersecu));
-		trainingRepository.save(new Training(null, "Spring", "Initiation au Dev/Web avec hp 4 jours", 1350.0, 1, null   , Cybersecu));
+		trainingRepository.save(new Training(null, "API", "Prise en main de NodeJs/Express 2 jours", 1420.0, 1, ""  , Cybersecu));
+		trainingRepository.save(new Training(null, "Spring", "Initiation au Dev/Web avec hp 4 jours", 1350.0, 1, ""   , Cybersecu));
 	}
 }
