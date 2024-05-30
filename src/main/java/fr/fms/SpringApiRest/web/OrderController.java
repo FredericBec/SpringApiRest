@@ -51,17 +51,17 @@ public class OrderController {
 
     @PostMapping("/order")
     public ResponseEntity<Order> saveOrder(@RequestBody Order orderBody) {
-        Order order = implBusinessService.saveOrder(new Order(null,new Date(),orderBody.getTotalAmount(), orderBody.getCustomer(),null));
-        if (Objects.isNull(order)) {
-            return ResponseEntity.noContent().build();
+            Order order = implBusinessService.saveOrder(orderBody);
+            if (Objects.isNull(order)) {
+                return ResponseEntity.noContent().build();
+            }
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(order.getId())
+                    .toUri();
+            return ResponseEntity.created(location).body(order);
         }
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(order.getId())
-                .toUri();
-        return ResponseEntity.created(location).body(order);
-    }
 
     @PostMapping("/orderItem")
     public ResponseEntity<OrderItem> saveOrderItem(@RequestBody OrderItem orderItemBody){
