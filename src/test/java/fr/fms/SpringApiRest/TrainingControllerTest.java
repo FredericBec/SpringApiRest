@@ -3,33 +3,40 @@ package fr.fms.SpringApiRest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.fms.SpringApiRest.dao.CategoryRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
+import fr.fms.SpringApiRest.entities.Category;
 import fr.fms.SpringApiRest.entities.Training;
 import fr.fms.SpringApiRest.service.ImplTrainingService;
 import fr.fms.SpringApiRest.web.TrainingController;
-
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.net.URI;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.put;
+
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.any;
+
+
 
 @WebMvcTest(controllers = TrainingController.class)
-public class TrainingControllerTest {
+class TrainingControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,13 +51,13 @@ public class TrainingControllerTest {
     private CategoryRepository categoryRepository;
 
     @Test
-    public void testGetTrainings() throws Exception
-    {
+     void testGetTrainings() throws Exception {
         mockMvc.perform(get("/api/trainings"))
                 .andExpect(status().isOk());
     }
+
     @Test
-    public void testSaveTraining() throws Exception {
+     void testSaveTraining() throws Exception {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -64,8 +71,9 @@ public class TrainingControllerTest {
                 .andExpect(status().isCreated())
                 .andReturn();
     }
+
     @Test
-    public void testTrainingsByCategory() throws Exception {
+     void testTrainingsByCategory() throws Exception {
         Long categoryId = 1L;
         List<Training> trainings = Arrays.asList(
                 new Training(1L, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, "java.png", null),
@@ -74,7 +82,7 @@ public class TrainingControllerTest {
 
         when(implTrainingService.getTrainingsByCategory(categoryId)).thenReturn(trainings);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/trainings/category/{id}", categoryId)
+        MvcResult result = mockMvc.perform(get("/api/trainings/category/{id}", categoryId)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -87,7 +95,7 @@ public class TrainingControllerTest {
     }
 
     @Test
-    public void testDeleteTraining() throws Exception {
+     void testDeleteTraining() throws Exception {
         Long trainingId = 1L;
 
         doNothing().when(implTrainingService).deleteTraining(trainingId);
@@ -95,16 +103,49 @@ public class TrainingControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/trainings/{id}", trainingId))
                 .andExpect(status().isNoContent());
     }
+
     @Test
-    public void testGetTrainingByIdNotFound() throws Exception {
+     void testGetTrainingByIdNotFound() throws Exception {
         Long trainingId = 1L;
 
         when(implTrainingService.readTraining(trainingId)).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/trainings/{id}", trainingId)
+        mockMvc.perform(get("/api/trainings/{id}", trainingId)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void testUpdateTraining() throws Exception {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Training existingTraining = new Training(1L, "formation", "description", 1000, 1, "formation.png", null);
+        Training updateTraining = new Training(1L, "updated formation", "updated description", 2000, 1, "formation.png", null);
+
+        when(implTrainingService.readTraining(existingTraining.getId())).thenReturn(Optional.of(existingTraining));
+        when(implTrainingService.saveTraining(updateTraining)).thenReturn(updateTraining);
+
+
+        String requestContent = objectMapper.writeValueAsString(updateTraining);
+
+        MvcResult result = (MvcResult) mockMvc.perform(MockMvcRequestBuilders.post("/api/update/{id}",existingTraining.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestContent ))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name",is("updated formation")))
+                .andExpect(jsonPath("$.description", is("updated description")))
+                .andExpect(jsonPath("$.price", is(2000.0)))
+                .andExpect(jsonPath("$.quantity", is(1)))
+                .andExpect(jsonPath("$.imageName",is("formation.png")))
+                .andReturn();
+
+
+
+
+
+    }
+
 }
 
 
