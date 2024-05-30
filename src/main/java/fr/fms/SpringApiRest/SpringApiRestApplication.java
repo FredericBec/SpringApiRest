@@ -24,12 +24,12 @@ public class SpringApiRestApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-	generateData();
+	//generateData();
 	}
 
 	private void generateData()
 	{
-		Category program = categoryRepository.save(new Category(null, "Devellopement Web", null));
+		Category program = categoryRepository.save(new Category(null, "Developement Web", null));
 		Category logiciel = categoryRepository.save(new Category(null, "Logiciel", null));
 		Category Cybersecu = categoryRepository.save(new Category(null, "Cybersecurite", null));
 

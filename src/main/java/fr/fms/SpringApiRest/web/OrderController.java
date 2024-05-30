@@ -51,7 +51,7 @@ public class OrderController {
 
     @PostMapping("/order")
     public ResponseEntity<Order> saveOrder(@RequestBody Order orderBody) {
-            Order order = implBusinessService.saveOrder(new Order(null,new Date(),orderBody.getTotalAmount(), orderBody.getCustomer(),null));
+            Order order = implBusinessService.saveOrder(orderBody);
             if (Objects.isNull(order)) {
                 return ResponseEntity.noContent().build();
             }
