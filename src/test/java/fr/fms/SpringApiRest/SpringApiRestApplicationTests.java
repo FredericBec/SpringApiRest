@@ -27,7 +27,8 @@ class SpringApiRestApplicationTests {
 	}
 
 	@Test
-	void testGetTrainingAndTestName() throws Exception{
+	void testGetTrainingAndTestName() throws Exception
+	{
 		mockMvc.perform(get("/api/trainings"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].name", is("Java")));

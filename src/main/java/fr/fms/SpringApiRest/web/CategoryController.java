@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -41,5 +42,11 @@ public class CategoryController {
     @DeleteMapping("/categories/{id}")
     public void deleteCategory(@PathVariable("id") Long id){
         implTrainingService.deleteCategory(id);
+    }
+
+    @GetMapping("/categoriesid/{id}")
+    public Optional<Category> getCatById(@PathVariable("id") Long id)
+    {
+        return implTrainingService.findCatById(id);
     }
 }

@@ -4,7 +4,6 @@ import fr.fms.SpringApiRest.entities.Training;
 import fr.fms.SpringApiRest.exception.RecordNotFoundException;
 import fr.fms.SpringApiRest.service.ImplTrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,6 +22,7 @@ public class TrainingController {
 
     @GetMapping("/trainings")
     public List<Training> allTrainings(){
+        List <Training> lT = implTrainingService.getTrainings();
         return implTrainingService.getTrainings();
     }
 
@@ -42,7 +42,25 @@ public class TrainingController {
                 .path("/{id}")
                 .buildAndExpand(training.getId())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(training);
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Training> updateTraining(@PathVariable("id") Long id , @RequestBody Training t){
+        Optional<Training> training = implTrainingService.readTraining(id);
+        System.out.println(training);
+        if(training.isPresent())
+        {
+            Training train = training.get();
+            train.setDescription(t.getDescription());
+            train.setName(t.getName());
+            train.setPrice(t.getPrice());
+            train.setCategory(t.getCategory());
+            implTrainingService.saveTraining(train);
+            return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne un statut 404 Not Found si l'entité n'est pas trouvée
+        }
     }
 
     @DeleteMapping("/trainings/{id}")
