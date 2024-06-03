@@ -52,7 +52,7 @@ public class PicturesController
         Optional<Training> training = implTrainingService.readTraining(idTraining);
         if(training.isPresent())
         {
-            training.get().setImageName(file.getOriginalFilename());
+            training.get().setImageName(file.isEmpty() ? "default.png" : file.getOriginalFilename());
         }
         String uploadImage = storageService.uploadImage(file);
         return ResponseEntity.status(HttpStatus.OK)
