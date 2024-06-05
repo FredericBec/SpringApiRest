@@ -55,9 +55,9 @@ class TestTrainingService
         cat2 = new Category(2L, "back" , null );
         cat3 = new Category(null , "app" , null );
 
-        train1 = new Training(null , "Java" , "back" , 10 , 1 , null , cat2 );
-        train2 = new Training(null , "javascript" , "front" , 20 , 1 , null , cat1 );
-        train3 = new Training(null , "php" , "back" , 30 , 1 , null , cat3 );
+        train1 = new Training(null , "Java" , "back" , 10 , 1 , false,true , null , cat2 );
+        train2 = new Training(null , "javascript" , "front" , 20 , 1 , false,true ,null , cat1 );
+        train3 = new Training(null , "php" , "back" , 30 , 1 , false,true ,null , cat3 );
     }
 
     @Test

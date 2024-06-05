@@ -8,7 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
@@ -19,6 +18,8 @@ public class Training implements Serializable {
     private String description;
     private double price;
     private int quantity;
+    private boolean onOrder;
+    private boolean active;
     private String imageName;
 
 //    @ManyToOne

@@ -32,9 +32,9 @@ public class TestRepository
     {
         cat1 = categoryRepository.save(new Category(null , "front" , null));
         Category cat2 = categoryRepository.save(new Category(null , "back" , null));
-        trainingRepository.save(new Training(null , "Java" , "back" , 10 , 1 , null , cat2));
-        trainingRepository.save(new Training(null , "javascript" , "front" , 20 , 1 , null , cat1));
-        trainingRepository.save(new Training(null , "php" , "back" , 30 , 1 , null , cat2));
+        trainingRepository.save(new Training(null , "Java" , "back" , 10 , 1 , false,true ,null , cat2));
+        trainingRepository.save(new Training(null , "javascript" , "front" , 20 , 1 , false,true ,null , cat1));
+        trainingRepository.save(new Training(null , "php" , "back" , 30 , 1 , false,true ,null , cat2));
     }
 
     @Test
