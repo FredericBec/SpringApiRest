@@ -1,5 +1,7 @@
 package fr.fms.SpringApiRest.web;
 
+import fr.fms.SpringApiRest.Mapper.CategoryMapper;
+import fr.fms.SpringApiRest.dto.CategoryDto;
 import fr.fms.SpringApiRest.entities.Category;
 import fr.fms.SpringApiRest.service.ImplTrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,17 @@ public class CategoryController {
     @Autowired
     ImplTrainingService implTrainingService;
 
+    @Autowired
+    CategoryMapper categoryMapper;
+
     @GetMapping("/categories")
     public List<Category> getCategories(){
         return implTrainingService.getCategories();
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<Category> saveCategory(@RequestBody Category c){
-        Category category = implTrainingService.saveCategory(c);
+    public ResponseEntity<Category> saveCategory(@RequestBody CategoryDto categoryDto){
+        Category category = implTrainingService.saveCategory(categoryMapper.mapToEntity(categoryDto));
         if(Objects.isNull(category)){
             return ResponseEntity.noContent().build();
         }
