@@ -1,15 +1,12 @@
 package fr.fms.SpringApiRest.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor @ToString
+@Data @NoArgsConstructor @AllArgsConstructor @ToString @Setter @Getter @Builder
 public class Category {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

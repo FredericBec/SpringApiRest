@@ -1,6 +1,7 @@
 package fr.fms.SpringApiRest;
 
 import fr.fms.SpringApiRest.dao.*;
+import fr.fms.SpringApiRest.dto.TrainingDto;
 import fr.fms.SpringApiRest.entities.*;
 import fr.fms.SpringApiRest.service.ImplTrainingService;
 import org.junit.jupiter.api.BeforeEach;

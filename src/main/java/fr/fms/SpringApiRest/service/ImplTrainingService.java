@@ -2,6 +2,7 @@ package fr.fms.SpringApiRest.service;
 
 import fr.fms.SpringApiRest.dao.CategoryRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
+import fr.fms.SpringApiRest.dto.TrainingDto;
 import fr.fms.SpringApiRest.entities.Category;
 import fr.fms.SpringApiRest.entities.Training;
 import org.springframework.beans.factory.annotation.Autowired;

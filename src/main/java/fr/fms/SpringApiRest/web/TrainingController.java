@@ -1,5 +1,7 @@
 package fr.fms.SpringApiRest.web;
 
+import fr.fms.SpringApiRest.Mapper.TrainingMapper;
+import fr.fms.SpringApiRest.dto.TrainingDto;
 import fr.fms.SpringApiRest.entities.Training;
 import fr.fms.SpringApiRest.exception.RecordNotFoundException;
 import fr.fms.SpringApiRest.service.ImplTrainingService;
@@ -20,6 +22,9 @@ public class TrainingController {
     @Autowired
     private ImplTrainingService implTrainingService;
 
+    @Autowired
+    private TrainingMapper trainingMapper;
+
     @GetMapping("/trainings")
     public List<Training> allTrainings(){
         List <Training> lT = implTrainingService.getTrainings();
@@ -32,8 +37,8 @@ public class TrainingController {
     }
 
     @PostMapping("/trainings")
-    public ResponseEntity<Training> saveTraining(@RequestBody Training t){
-        Training training = implTrainingService.saveTraining(t);
+    public ResponseEntity<Training> saveTraining(@RequestBody TrainingDto trainingDto){
+        Training training = implTrainingService.saveTraining(trainingMapper.mapToEntity(trainingDto));
         if(Objects.isNull(training)){
             return ResponseEntity.noContent().build();
         }
@@ -46,16 +51,16 @@ public class TrainingController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<Training> updateTraining(@PathVariable("id") Long id , @RequestBody Training t){
+    public ResponseEntity<Training> updateTraining(@PathVariable("id") Long id , @RequestBody TrainingDto trainingDto){
         Optional<Training> training = implTrainingService.readTraining(id);
         System.out.println(training);
         if(training.isPresent())
         {
             Training train = training.get();
-            train.setDescription(t.getDescription());
-            train.setName(t.getName());
-            train.setPrice(t.getPrice());
-            train.setCategory(t.getCategory());
+            train.setDescription(trainingDto.getDescription());
+            train.setName(trainingDto.getName());
+            train.setPrice(trainingDto.getPrice());
+            train.setCategory(trainingDto.getCategory());
             implTrainingService.saveTraining(train);
             return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
         } else {
