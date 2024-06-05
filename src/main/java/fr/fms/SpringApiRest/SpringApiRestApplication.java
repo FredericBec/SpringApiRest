@@ -3,11 +3,16 @@ package fr.fms.SpringApiRest;
 import fr.fms.SpringApiRest.dao.CategoryRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
 import fr.fms.SpringApiRest.entities.Category;
+import fr.fms.SpringApiRest.entities.Role;
 import fr.fms.SpringApiRest.entities.Training;
+import fr.fms.SpringApiRest.entities.User;
+import fr.fms.SpringApiRest.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class SpringApiRestApplication implements CommandLineRunner {
@@ -18,6 +23,9 @@ public class SpringApiRestApplication implements CommandLineRunner {
 	@Autowired
 	CategoryRepository categoryRepository;
 
+	@Autowired
+	AccountServiceImpl accountService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringApiRestApplication.class, args);
 	}
@@ -25,6 +33,7 @@ public class SpringApiRestApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 	//generateData();
+		//generateUserRoles();
 	}
 
 	private void generateData()
@@ -43,5 +52,15 @@ public class SpringApiRestApplication implements CommandLineRunner {
 		trainingRepository.save(new Training(null, "Swift", "Business Intelligence 5 jours", 3010.0, 1, "swift.png"  , logiciel));
 		trainingRepository.save(new Training(null, "API", "Prise en main de NodeJs/Express 2 jours", 1420.0, 1, ""  , Cybersecu));
 		trainingRepository.save(new Training(null, "Spring", "Initiation au Dev/Web avec hp 4 jours", 1350.0, 1, ""   , Cybersecu));
+	}
+
+	private void generateUserRoles(){
+		accountService.saveUser(new User(null, "fred2024", "fmsacademy", new ArrayList<>()));
+		accountService.saveUser(new User(null, "martinmatin", "supermartin", new ArrayList<>()));
+		accountService.saveRole(new Role(null, "ADMIN"));
+		accountService.saveRole(new Role(null, "USER"));
+		accountService.addRoleToUser("fred2024", "ADMIN");
+		accountService.addRoleToUser("fred2024", "USER");
+		accountService.addRoleToUser("martinmatin", "USER");
 	}
 }
