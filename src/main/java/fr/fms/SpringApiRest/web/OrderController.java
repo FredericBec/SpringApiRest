@@ -1,9 +1,11 @@
 package fr.fms.SpringApiRest.web;
 
 
+import fr.fms.SpringApiRest.Mapper.CustomerMapper;
 import fr.fms.SpringApiRest.dao.CustomerRepository;
 import fr.fms.SpringApiRest.dao.OrderItemRepository;
 import fr.fms.SpringApiRest.dao.OrderRepository;
+import fr.fms.SpringApiRest.dto.CustomerDto;
 import fr.fms.SpringApiRest.entities.Customer;
 import fr.fms.SpringApiRest.entities.Order;
 import fr.fms.SpringApiRest.entities.OrderItem;
@@ -34,10 +36,13 @@ public class OrderController {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
 
     @PostMapping("/customer")
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customerBody) {
-        Customer customer = implBusinessService.saveCustomer(customerBody);
+    public ResponseEntity<Customer> saveCustomer(@RequestBody CustomerDto customerDto) {
+        Customer customer = implBusinessService.saveCustomer(customerMapper.mapToEntity(customerDto));
         if (Objects.isNull(customer)) {
             return ResponseEntity.noContent().build();
         }
