@@ -82,7 +82,7 @@ class OrderControllerTest {
 
         Customer testRaymond = new Customer(1L, "Dubarre", "Raymond", "chemin des 6 bières 24000 Perigueux", "6666666666", "bourre.galette@sfr.fr", null);
         Order testOrder = new Order(1L, new Date(), 10000, testRaymond, null);
-        Training oenologie = new Training(1L, "oenologie", "Devenez incollable sur les vins et les bières", 2000, 1, false,true ,"", null);
+        Training oenologie = new Training(1L, "oenologie", "Devenez incollable sur les vins et les bières", 2000, 1, false,true , 10 ,"", null);
         OrderItem testOrderItem = new OrderItem(null, 5, 2000, oenologie, testOrder);
         String requestContent = objectMapper.writeValueAsString(testOrderItem);
         when(implBusinessService.saveOrderItem(testOrderItem)).thenReturn(testOrderItem);

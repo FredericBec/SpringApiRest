@@ -20,6 +20,7 @@ public class Training implements Serializable {
     private int quantity;
     private boolean onOrder;
     private boolean active;
+    private int place;
     private String imageName;
 
 //    @ManyToOne

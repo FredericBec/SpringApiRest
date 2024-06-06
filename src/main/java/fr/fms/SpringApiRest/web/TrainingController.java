@@ -65,6 +65,7 @@ public class TrainingController {
             train.setName(t.getName());
             train.setPrice(t.getPrice());
             train.setCategory(t.getCategory());
+            train.setActive(t.isActive());
             implTrainingService.saveTraining(train);
             System.out.println("train " + train);
             return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
@@ -99,15 +100,20 @@ public class TrainingController {
                 .orElseThrow(() -> new RecordNotFoundException("Id de formation " + id + " n'existe pas"));
     }
 
-    @PostMapping("/updateOnOrder")
-    public ResponseEntity<Training> updateOnOrder(@RequestBody Long t)
+    @PostMapping("/updateOnOrder/{id}")
+    public ResponseEntity<Training> updateOnOrder(@PathVariable("id") Long id ,@RequestBody int place)
     {
-        Optional<Training> training = implTrainingService.readTraining(t);
+        Optional<Training> training = implTrainingService.readTraining(id);
         System.out.println("training " + training);
         if(training.isPresent())
         {
             Training train = training.get();
             train.setOnOrder(true);
+            train.setPlace(train.getPlace() - place);
+            if(train.getPlace() < 1)
+            {
+                train.setActive(false);
+            }
             implTrainingService.saveTraining(train);
             System.out.println("train " + train);
             return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
@@ -129,4 +135,37 @@ public class TrainingController {
         return implTrainingService.getTrainingsByCategoryAndActive(id);
     }
 
+    @PostMapping("/desactivatedTraining")
+    public ResponseEntity<Training> desactivatedTraining(@RequestBody Training t)
+    {
+        Optional<Training> training = implTrainingService.readTraining(t.getId());
+        System.out.println("training " + training);
+        if(training.isPresent())
+        {
+            Training train = training.get();
+            train.setActive(false);
+            implTrainingService.saveTraining(train);
+            System.out.println("train " + train);
+            return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne un statut 404 Not Found si l'entité n'est pas trouvée
+        }
+    }
+
+    @PostMapping("/activatedTraining")
+    public ResponseEntity<Training> activatedTraining(@RequestBody Training t)
+    {
+        Optional<Training> training = implTrainingService.readTraining(t.getId());
+        System.out.println("training " + training);
+        if(training.isPresent())
+        {
+            Training train = training.get();
+            train.setActive(true);
+            implTrainingService.saveTraining(train);
+            System.out.println("train " + train);
+            return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne un statut 404 Not Found si l'entité n'est pas trouvée
+        }
+    }
 }
