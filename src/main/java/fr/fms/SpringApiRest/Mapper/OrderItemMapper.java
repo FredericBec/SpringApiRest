@@ -5,11 +5,10 @@ import fr.fms.SpringApiRest.entities.OrderItem;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 
-@Setter
-@Getter
-@Builder
+@Component
 public class OrderItemMapper {
     public OrderItemDto mapToDto (OrderItem orderItem){
         OrderItemDto orderItemDto = OrderItemDto.builder()

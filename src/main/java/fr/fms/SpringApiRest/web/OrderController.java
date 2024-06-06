@@ -2,12 +2,14 @@ package fr.fms.SpringApiRest.web;
 
 
 import fr.fms.SpringApiRest.Mapper.CustomerMapper;
+import fr.fms.SpringApiRest.Mapper.OrderItemMapper;
 import fr.fms.SpringApiRest.Mapper.OrderMapper;
 import fr.fms.SpringApiRest.dao.CustomerRepository;
 import fr.fms.SpringApiRest.dao.OrderItemRepository;
 import fr.fms.SpringApiRest.dao.OrderRepository;
 import fr.fms.SpringApiRest.dto.CustomerDto;
 import fr.fms.SpringApiRest.dto.OrderDto;
+import fr.fms.SpringApiRest.dto.OrderItemDto;
 import fr.fms.SpringApiRest.entities.Customer;
 import fr.fms.SpringApiRest.entities.Order;
 import fr.fms.SpringApiRest.entities.OrderItem;
@@ -44,6 +46,8 @@ public class OrderController {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OrderItemMapper orderItemMapper;
 
     @PostMapping("/customer")
     public ResponseEntity<Customer> saveCustomer(@RequestBody CustomerDto customerDto) {
@@ -74,8 +78,8 @@ public class OrderController {
         }
 
     @PostMapping("/orderItem")
-    public ResponseEntity<OrderItem> saveOrderItem(@RequestBody OrderItem orderItemBody){
-        OrderItem orderItem = implBusinessService.saveOrderItem(orderItemBody);
+    public ResponseEntity<OrderItem> saveOrderItem(@RequestBody OrderItemDto orderItemDto){
+        OrderItem orderItem = implBusinessService.saveOrderItem(orderItemMapper.mapToEntity(orderItemDto));
         if(Objects.isNull(orderItem)){
             return ResponseEntity.noContent().build();
         }

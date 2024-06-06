@@ -3,7 +3,10 @@ package fr.fms.SpringApiRest.Mapper;
 import fr.fms.SpringApiRest.dto.CategoryDto;
 import fr.fms.SpringApiRest.dto.OrderDto;
 import fr.fms.SpringApiRest.entities.Order;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class OrderMapper {
 
     public OrderDto mapToDto (Order order){

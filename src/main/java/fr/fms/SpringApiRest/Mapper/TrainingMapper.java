@@ -2,7 +2,9 @@ package fr.fms.SpringApiRest.Mapper;
 
 import fr.fms.SpringApiRest.dto.TrainingDto;
 import fr.fms.SpringApiRest.entities.Training;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TrainingMapper {
 
     public TrainingDto mapToDTO (Training training){

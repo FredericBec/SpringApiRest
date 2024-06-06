@@ -2,7 +2,10 @@ package fr.fms.SpringApiRest.Mapper;
 
 import fr.fms.SpringApiRest.dto.CustomerDto;
 import fr.fms.SpringApiRest.entities.Customer;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class CustomerMapper {
 
     public CustomerDto mapToDto (Customer customer){
