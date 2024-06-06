@@ -1,14 +1,14 @@
 package fr.fms.SpringApiRest.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
+@Setter
+@Getter
+@Builder
 public class OrderItem {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,4 +20,6 @@ public class OrderItem {
 
     @ManyToOne
     private Order order;
+
+
 }

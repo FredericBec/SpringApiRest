@@ -1,17 +1,16 @@
 package fr.fms.SpringApiRest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor @ToString
+@Data @NoArgsConstructor @AllArgsConstructor @ToString @Setter
+@Getter
+@Builder
 @Table(name = "t_order")
 public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
