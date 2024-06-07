@@ -5,7 +5,7 @@ import fr.fms.SpringApiRest.dao.CategoryRepository;
 import fr.fms.SpringApiRest.dao.RoleRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
 import fr.fms.SpringApiRest.dao.UserRepository;
-import fr.fms.SpringApiRest.entities.User;
+import fr.fms.SpringApiRest.entities.AppUser;
 import fr.fms.SpringApiRest.service.AccountServiceImpl;
 import fr.fms.SpringApiRest.web.AccountRestController;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ public class AccountControllerTest {
     void testSaveUser() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
 
-        User newUser = new User(null, "papa", "superpapa", new ArrayList<>());
+        AppUser newUser = new AppUser(null, "papa", "superpapa", new ArrayList<>());
         String requestContent = objectMapper.writeValueAsString(newUser);
         when(accountService.saveUser(newUser)).thenReturn(newUser);
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/users")
