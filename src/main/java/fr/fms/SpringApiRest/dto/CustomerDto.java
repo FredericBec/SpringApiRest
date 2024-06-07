@@ -9,14 +9,15 @@ import lombok.Setter;
 @Getter
 @Builder
 public class CustomerDto {
-
+    private  Long id;
     private String name;
     private String firstName;
     private String address;
     private String email;
     private String phone;
 
-    public CustomerDto (String name, String firstName, String address, String email, String phone){
+    public CustomerDto (Long id, String name, String firstName, String address, String email, String phone){
+        this.id=id;
         this.name=name;
         this.firstName=firstName;
         this.address=address;

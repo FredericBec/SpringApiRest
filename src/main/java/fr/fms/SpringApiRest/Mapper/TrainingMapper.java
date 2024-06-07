@@ -15,6 +15,7 @@ public class TrainingMapper {
                 .price(training.getPrice())
                 .quantity(training.getQuantity())
                 .imageName(training.getImageName())
+                .category(training.getCategory())
                 .build();
 
         return  trainingDto;
@@ -28,6 +29,7 @@ public class TrainingMapper {
                 .price(trainingDto.getPrice())
                 .quantity(trainingDto.getQuantity())
                 .imageName(trainingDto.getImageName())
+                .category(trainingDto.getCategory())
                 .build();
 
         return training;
