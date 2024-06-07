@@ -2,8 +2,8 @@ package fr.fms.SpringApiRest.service;
 
 import fr.fms.SpringApiRest.dao.RoleRepository;
 import fr.fms.SpringApiRest.dao.UserRepository;
-import fr.fms.SpringApiRest.entities.Role;
-import fr.fms.SpringApiRest.entities.User;
+import fr.fms.SpringApiRest.entities.AppRole;
+import fr.fms.SpringApiRest.entities.AppUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService{
     public BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User saveUser(User user) {
+    public AppUser saveUser(AppUser user) {
         String hashPw = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(hashPw);
         log.info("sauvegarde d'un utilisateur {} en base", user);
@@ -34,26 +34,26 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Role saveRole(Role role) {
+    public AppRole saveRole(AppRole role) {
         log.info("sauvergarde d'un nouveau role en base");
         return roleRepository.save(role);
     }
 
     @Override
     public void addRoleToUser(String username, String rolename) {
-        Role role = roleRepository.findByRolename(rolename);
-        User user = userRepository.findByUsername(username);
+        AppRole role = roleRepository.findByRolename(rolename);
+        AppUser user = userRepository.findByUsername(username);
         user.getRoles().add(role);
         log.info("association d'un role à un utilisateur");
     }
 
     @Override
-    public User findUserByUsername(String username) {
+    public AppUser findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public ResponseEntity<List<User>> listUser() {
+    public ResponseEntity<List<AppUser>> listUser() {
         return ResponseEntity.ok().body(userRepository.findAll());
     }
 }

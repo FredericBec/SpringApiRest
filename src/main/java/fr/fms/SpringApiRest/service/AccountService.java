@@ -1,15 +1,15 @@
 package fr.fms.SpringApiRest.service;
 
-import fr.fms.SpringApiRest.entities.Role;
-import fr.fms.SpringApiRest.entities.User;
+import fr.fms.SpringApiRest.entities.AppRole;
+import fr.fms.SpringApiRest.entities.AppUser;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface AccountService {
-    User saveUser(User user);
-    Role saveRole(Role role);
+    AppUser saveUser(AppUser user);
+    AppRole saveRole(AppRole role);
     void addRoleToUser(String username, String rolename);
-    User findUserByUsername(String username);
-    ResponseEntity<List<User>> listUser();
+    AppUser findUserByUsername(String username);
+    ResponseEntity<List<AppUser>> listUser();
 }

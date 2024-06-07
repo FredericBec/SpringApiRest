@@ -1,8 +1,8 @@
 package fr.fms.SpringApiRest.web;
 
 
-import fr.fms.SpringApiRest.entities.Role;
-import fr.fms.SpringApiRest.entities.User;
+import fr.fms.SpringApiRest.entities.AppRole;
+import fr.fms.SpringApiRest.entities.AppUser;
 import fr.fms.SpringApiRest.service.AccountServiceImpl;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +19,17 @@ public class AccountRestController {
     AccountServiceImpl accountService;
 
     @GetMapping("/users")
-    ResponseEntity<List<User>> getUsers(){
+    ResponseEntity<List<AppUser>> getUsers(){
         return this.accountService.listUser();
     }
 
     @PostMapping("/users")
-    public User postUser(@RequestBody User user){
+    public AppUser postUser(@RequestBody AppUser user){
         return this.accountService.saveUser(user);
     }
 
     @PostMapping("/roles")
-    public Role postRole(@RequestBody Role role){
+    public AppRole postRole(@RequestBody AppRole role){
         return this.accountService.saveRole(role);
     }
 
