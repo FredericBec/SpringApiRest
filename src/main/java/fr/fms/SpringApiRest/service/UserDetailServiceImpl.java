@@ -1,52 +1,17 @@
 package fr.fms.SpringApiRest.service;
 
-import org.springframework.security.core.GrantedAuthority;
+import fr.fms.SpringApiRest.entities.AppUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-
-public class UserDetailServiceImpl implements UserDetails {
-
-    private Long id;
-
-    private String username;
-
-    private String password;
-
-    private Collection<? extends GrantedAuthority> authorities;
+@Service
+public class UserDetailServiceImpl implements UserDetailsService{
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
     }
 }
