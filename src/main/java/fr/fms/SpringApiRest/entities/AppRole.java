@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Role {
+public class AppRole {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
