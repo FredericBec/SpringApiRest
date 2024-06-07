@@ -3,9 +3,9 @@ package fr.fms.SpringApiRest;
 import fr.fms.SpringApiRest.dao.CategoryRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
 import fr.fms.SpringApiRest.entities.Category;
-import fr.fms.SpringApiRest.entities.Role;
+import fr.fms.SpringApiRest.entities.AppRole;
 import fr.fms.SpringApiRest.entities.Training;
-import fr.fms.SpringApiRest.entities.User;
+import fr.fms.SpringApiRest.entities.AppUser;
 import fr.fms.SpringApiRest.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -32,7 +32,7 @@ public class SpringApiRestApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-	//generateData();
+		//generateData();
 		//generateUserRoles();
 	}
 
@@ -55,10 +55,10 @@ public class SpringApiRestApplication implements CommandLineRunner {
 	}
 
 	private void generateUserRoles(){
-		accountService.saveUser(new User(null, "fred2024", "fmsacademy", new ArrayList<>()));
-		accountService.saveUser(new User(null, "martinmatin", "supermartin", new ArrayList<>()));
-		accountService.saveRole(new Role(null, "ADMIN"));
-		accountService.saveRole(new Role(null, "USER"));
+		accountService.saveUser(new AppUser(null, "fred2024", "fmsacademy", new ArrayList<>()));
+		accountService.saveUser(new AppUser(null, "martinmatin", "supermartin", new ArrayList<>()));
+		accountService.saveRole(new AppRole(null, "ADMIN"));
+		accountService.saveRole(new AppRole(null, "USER"));
 		accountService.addRoleToUser("fred2024", "ADMIN");
 		accountService.addRoleToUser("fred2024", "USER");
 		accountService.addRoleToUser("martinmatin", "USER");
