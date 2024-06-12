@@ -6,6 +6,7 @@ import fr.fms.SpringApiRest.entities.Customer;
 import fr.fms.SpringApiRest.entities.Order;
 import fr.fms.SpringApiRest.entities.OrderItem;
 import fr.fms.SpringApiRest.entities.Training;
+import fr.fms.SpringApiRest.service.AccountServiceImpl;
 import fr.fms.SpringApiRest.service.ImplBusinessService;
 import fr.fms.SpringApiRest.web.OrderController;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -32,6 +35,12 @@ class OrderControllerTest {
     private ImplBusinessService implBusinessService;
 
     @MockBean
+    private AccountServiceImpl accountService;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
+
+    @MockBean
     private OrderRepository orderRepository;
 
     @MockBean
@@ -45,6 +54,15 @@ class OrderControllerTest {
 
     @MockBean
     private CategoryRepository categoryRepository;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private RoleRepository roleRepository;
+
+    @MockBean
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Test
     void testSaveCustomer() throws Exception{

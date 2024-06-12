@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -32,6 +33,9 @@ public class AccountControllerTest {
 
     @MockBean
     private AccountServiceImpl accountService;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
 
     @MockBean
     private TrainingRepository trainingRepository;
@@ -63,7 +67,7 @@ public class AccountControllerTest {
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestContent))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isOk())
                 .andReturn();
     }
 }

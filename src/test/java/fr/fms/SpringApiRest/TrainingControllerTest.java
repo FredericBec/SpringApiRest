@@ -2,9 +2,12 @@ package fr.fms.SpringApiRest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.fms.SpringApiRest.dao.CategoryRepository;
+import fr.fms.SpringApiRest.dao.RoleRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
+import fr.fms.SpringApiRest.dao.UserRepository;
 import fr.fms.SpringApiRest.entities.Category;
 import fr.fms.SpringApiRest.entities.Training;
+import fr.fms.SpringApiRest.service.AccountServiceImpl;
 import fr.fms.SpringApiRest.service.ImplTrainingService;
 import fr.fms.SpringApiRest.web.TrainingController;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -45,10 +50,25 @@ class TrainingControllerTest {
     private ImplTrainingService implTrainingService;
 
     @MockBean
+    private AccountServiceImpl accountService;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
+
+    @MockBean
     private TrainingRepository trainingRepository;
 
     @MockBean
     private CategoryRepository categoryRepository;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private RoleRepository roleRepository;
+
+    @MockBean
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Test
      void testGetTrainings() throws Exception {
