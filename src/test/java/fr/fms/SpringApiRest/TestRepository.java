@@ -1,15 +1,21 @@
 package fr.fms.SpringApiRest;
 
 import fr.fms.SpringApiRest.dao.CategoryRepository;
+import fr.fms.SpringApiRest.dao.RoleRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
+import fr.fms.SpringApiRest.dao.UserRepository;
 import fr.fms.SpringApiRest.entities.Category;
 import fr.fms.SpringApiRest.entities.Training;
+import fr.fms.SpringApiRest.service.AccountServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,11 +25,27 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TestRepository
 {
+
+    @MockBean
+    private AccountServiceImpl accountService;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
+
     @Autowired
     private TrainingRepository trainingRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private RoleRepository roleRepository;
+
+    @MockBean
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     Category cat1;
 
