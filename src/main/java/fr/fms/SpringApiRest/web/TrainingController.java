@@ -81,5 +81,65 @@ public class TrainingController {
                 .orElseThrow(() -> new RecordNotFoundException("Id de formation " + id + " n'existe pas"));
     }
 
+    @GetMapping("/trainingsActive")
+    public List<Training> allTrainingsActive()
+    {
+        List <Training> lT = implTrainingService.getByActive();
+        return implTrainingService.getByActive();
+    }
 
+    @GetMapping("/trainings/categoryActive/{id}")
+    public List<Training> trainingsByCategoryActive(@PathVariable("id") Long id)
+    {
+        return implTrainingService.getTrainingsByCategoryAndActive(id);
+    }
+
+    @PostMapping("/desactivatedTraining")
+    public ResponseEntity<Training> desactivatedTraining(@RequestBody Training t)
+    {
+        Optional<Training> training = implTrainingService.readTraining(t.getId());
+        if(training.isPresent())
+        {
+            Training train = training.get();
+            train.setActive(false);
+            implTrainingService.saveTraining(train);
+            return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne un statut 404 Not Found si l'entité n'est pas trouvée
+        }
+    }
+
+    @PostMapping("/updateOnOrder/{id}")
+    public ResponseEntity<Training> updateOnOrder(@PathVariable("id") Long id ,@RequestBody int place)
+    {
+        Optional<Training> training = implTrainingService.readTraining(id);
+        if(training.isPresent())
+        {
+            Training train = training.get();
+            train.setPlace(train.getPlace() - place);
+            if(train.getPlace() < 1)
+            {
+                train.setOnOrder(true);
+            }
+            implTrainingService.saveTraining(train);
+            return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne un statut 404 Not Found si l'entité n'est pas trouvée
+        }
+    }
+
+    @PostMapping("/activatedTraining")
+    public ResponseEntity<Training> activatedTraining(@RequestBody Training t)
+    {
+        Optional<Training> training = implTrainingService.readTraining(t.getId());
+        if(training.isPresent())
+        {
+            Training train = training.get();
+            train.setActive(true);
+            implTrainingService.saveTraining(train);
+            return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // Retourne un statut 404 Not Found si l'entité n'est pas trouvée
+        }
+    }
 }

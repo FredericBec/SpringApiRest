@@ -14,6 +14,8 @@ public class OrderItemMapper {
         OrderItemDto orderItemDto = OrderItemDto.builder()
                 .quantity(orderItem.getQuantity())
                 .price(orderItem.getPrice())
+                .training(orderItem.getTraining())
+                .order(orderItem.getOrder())
                 .build();
 
         return orderItemDto;
@@ -23,6 +25,8 @@ public class OrderItemMapper {
         OrderItem orderItem = OrderItem.builder()
                 .quantity(orderItemDto.getQuantity())
                 .price(orderItemDto.getPrice())
+                .training(orderItemDto.getTraining())
+                .order(orderItemDto.getOrder())
                 .build();
 
         return orderItem;

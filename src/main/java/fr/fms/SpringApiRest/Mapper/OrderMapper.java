@@ -13,6 +13,7 @@ public class OrderMapper {
         OrderDto orderDto = OrderDto.builder()
                 .date(order.getDate())
                 .totalAmount(order.getTotalAmount())
+                .customer(order.getCustomer())
                 .build();
 
         return orderDto;
@@ -22,6 +23,7 @@ public class OrderMapper {
         Order order = Order.builder()
                 .date(orderDto.getDate())
                 .totalAmount(orderDto.getTotalAmount())
+                .customer(orderDto.getCustomer())
                 .build();
 
            return order;

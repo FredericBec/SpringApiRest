@@ -15,6 +15,9 @@ public class TrainingMapper {
                 .price(training.getPrice())
                 .quantity(training.getQuantity())
                 .imageName(training.getImageName())
+                .active(training.isActive())
+                .onOrder(training.isOnOrder())
+                .place(training.getPlace())
                 .build();
 
         return  trainingDto;
@@ -28,6 +31,9 @@ public class TrainingMapper {
                 .price(trainingDto.getPrice())
                 .quantity(trainingDto.getQuantity())
                 .imageName(trainingDto.getImageName())
+                .active(trainingDto.isActive())
+                .onOrder(trainingDto.isOnOrder())
+                .place(trainingDto.getPlace())
                 .build();
 
         return training;

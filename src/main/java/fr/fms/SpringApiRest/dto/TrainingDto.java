@@ -17,10 +17,11 @@ public class TrainingDto {
     private String imageName;
     private Category category;
     private boolean active;
+    private boolean onOrder;
     private int place;
 
 
-    public TrainingDto(String name, String description, double price, int quantity, String imageName, Category category, boolean active, int place){
+    public TrainingDto(String name, String description, double price, int quantity, String imageName, Category category, boolean active, boolean onOrder, int place){
         this.name=name;
         this.description=description;
         this.price=price;
@@ -28,6 +29,7 @@ public class TrainingDto {
         this.imageName=imageName;
         this.category=category;
         this.active = active;
+        this.onOrder = onOrder;
         this.place = place;
     }
 }
