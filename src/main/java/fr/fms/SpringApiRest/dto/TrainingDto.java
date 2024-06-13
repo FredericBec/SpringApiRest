@@ -16,14 +16,18 @@ public class TrainingDto {
     private int quantity;
     private String imageName;
     private Category category;
+    private boolean active;
+    private int place;
 
 
-    public TrainingDto(String name, String description, double price, int quantity, String imageName, Category category){
+    public TrainingDto(String name, String description, double price, int quantity, String imageName, Category category, boolean active, int place){
         this.name=name;
         this.description=description;
         this.price=price;
         this.quantity=quantity;
         this.imageName=imageName;
         this.category=category;
+        this.active = active;
+        this.place = place;
     }
 }

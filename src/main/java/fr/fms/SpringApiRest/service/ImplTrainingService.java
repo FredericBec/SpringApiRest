@@ -62,4 +62,12 @@ public class ImplTrainingService implements ITrainingService {
 
     @Override
     public Optional<Category> findCatById(Long id) { return categoryRepository.findById(id); }
+
+    @Override
+    public List<Training> getByActive() { return trainingRepository.findByActiveTrue(); }
+
+    @Override
+    public List<Training> getTrainingsByCategoryAndActive(Long categoryId) {
+        return trainingRepository.findByCategoryIdAndActiveTrue(categoryId);
+    }
 }

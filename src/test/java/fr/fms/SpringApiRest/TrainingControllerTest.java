@@ -62,7 +62,7 @@ class TrainingControllerTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Training testTraining = new Training(null, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, null, null);
+        Training testTraining = new Training(null, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, false,true , 10 , null, null);
         String requestContent = objectMapper.writeValueAsString(testTraining);
         when(implTrainingService.saveTraining(testTraining)).thenReturn(testTraining);
         MvcResult result = (MvcResult) mockMvc.perform(MockMvcRequestBuilders.post("/api/trainings")
@@ -76,8 +76,8 @@ class TrainingControllerTest {
      void testTrainingsByCategory() throws Exception {
         Long categoryId = 1L;
         List<Training> trainings = Arrays.asList(
-                new Training(1L, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, "java.png", null),
-                new Training(2L, "Spring", "Spring Framework sur 5 jours", 4000.0, 1, "spring.png", null)
+                new Training(1L, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, false,true , 10 ,"java.png", null),
+                new Training(2L, "Spring", "Spring Framework sur 5 jours", 4000.0, 1, false,true , 10 ,"spring.png", null)
         );
 
         when(implTrainingService.getTrainingsByCategory(categoryId)).thenReturn(trainings);
@@ -120,8 +120,8 @@ class TrainingControllerTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Training existingTraining = new Training(1L, "formation", "description", 1000, 1, "formation.png", null);
-        Training updateTraining = new Training(1L, "updated formation", "updated description", 2000, 1, "formation.png", null);
+        Training existingTraining = new Training(1L, "formation", "description", 1000, 1, false,true , 10 ,"formation.png", null);
+        Training updateTraining = new Training(1L, "updated formation", "updated description", 2000, 1, false,true , 10 ,"formation.png", null);
 
         when(implTrainingService.readTraining(existingTraining.getId())).thenReturn(Optional.of(existingTraining));
         when(implTrainingService.saveTraining(updateTraining)).thenReturn(updateTraining);
