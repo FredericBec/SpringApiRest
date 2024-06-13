@@ -61,6 +61,16 @@ public class TrainingController {
             train.setName(trainingDto.getName());
             train.setPrice(trainingDto.getPrice());
             train.setCategory(trainingDto.getCategory());
+            train.setActive(trainingDto.isActive());
+            train.setPlace(trainingDto.getPlace());
+            if(trainingDto.getPlace() > 0)
+            {
+                train.setOnOrder(false);
+            }
+            else
+            {
+                train.setOnOrder(true);
+            }
             implTrainingService.saveTraining(train);
             return ResponseEntity.ok(train); // Retourne le Training mis à jour avec un statut 200 OK
         } else {
