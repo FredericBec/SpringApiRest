@@ -1,10 +1,12 @@
 package fr.fms.SpringApiRest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.fms.SpringApiRest.Mapper.TrainingMapper;
 import fr.fms.SpringApiRest.dao.CategoryRepository;
 import fr.fms.SpringApiRest.dao.RoleRepository;
 import fr.fms.SpringApiRest.dao.TrainingRepository;
 import fr.fms.SpringApiRest.dao.UserRepository;
+import fr.fms.SpringApiRest.dto.TrainingDto;
 import fr.fms.SpringApiRest.entities.Category;
 import fr.fms.SpringApiRest.entities.Training;
 import fr.fms.SpringApiRest.service.AccountServiceImpl;
@@ -53,6 +55,9 @@ class TrainingControllerTest {
     private AccountServiceImpl accountService;
 
     @MockBean
+    private TrainingMapper trainingMapper;
+
+    @MockBean
     private UserDetailsService userDetailsService;
 
     @MockBean
@@ -78,18 +83,31 @@ class TrainingControllerTest {
 
     @Test
      void testSaveTraining() throws Exception {
-
-
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Training testTraining = new Training(null, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, false,true , 10 , null, null);
-        String requestContent = objectMapper.writeValueAsString(testTraining);
-        when(implTrainingService.saveTraining(testTraining)).thenReturn(testTraining);
-        MvcResult result = (MvcResult) mockMvc.perform(MockMvcRequestBuilders.post("/api/trainings")
+        // DTO utilisé dans la requête (si applicable)
+        TrainingDto trainingDto = new TrainingDto("Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, null, null, true, false, 10);
+
+        // Entité attendue après mappage
+        Training testTraining = new Training(null, "Java", "Java Standard Edition 8 sur 5 jours", 3500.0, 1, false, true, 10, null, null);
+
+        String requestContent = objectMapper.writeValueAsString(trainingDto);
+
+        // Configuration des mocks
+        when(trainingMapper.mapToEntity(any(TrainingDto.class))).thenReturn(testTraining);
+        when(implTrainingService.saveTraining(any(Training.class))).thenReturn(testTraining);
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/trainings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestContent))
                 .andExpect(status().isCreated())
                 .andReturn();
+
+        // Vérifiez la réponse si nécessaire
+        String jsonResponse = result.getResponse().getContentAsString();
+        Training responseTraining = objectMapper.readValue(jsonResponse, Training.class);
+        assertEquals("Java", responseTraining.getName());
+        assertEquals("Java Standard Edition 8 sur 5 jours", responseTraining.getDescription());
     }
 
     @Test

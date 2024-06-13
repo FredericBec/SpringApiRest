@@ -1,7 +1,13 @@
 package fr.fms.SpringApiRest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.fms.SpringApiRest.Mapper.CustomerMapper;
+import fr.fms.SpringApiRest.Mapper.OrderItemMapper;
+import fr.fms.SpringApiRest.Mapper.OrderMapper;
 import fr.fms.SpringApiRest.dao.*;
+import fr.fms.SpringApiRest.dto.CustomerDto;
+import fr.fms.SpringApiRest.dto.OrderDto;
+import fr.fms.SpringApiRest.dto.OrderItemDto;
 import fr.fms.SpringApiRest.entities.Customer;
 import fr.fms.SpringApiRest.entities.Order;
 import fr.fms.SpringApiRest.entities.OrderItem;
@@ -20,6 +26,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,6 +48,15 @@ class OrderControllerTest {
 
     @MockBean
     private UserDetailsService userDetailsService;
+
+    @MockBean
+    private CustomerMapper customerMapper;
+
+    @MockBean
+    private OrderMapper orderMapper;
+
+    @MockBean
+    private OrderItemMapper orderItemMapper;
 
     @MockBean
     private OrderRepository orderRepository;
@@ -68,14 +86,26 @@ class OrderControllerTest {
     void testSaveCustomer() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Customer testCustomer = new Customer(null, "Dupont", "Robert", "5 chemin de Moulinsart 41700 cherveny", "0123456789", "dup.rob@gmail.com", null);
-        String requestContent = objectMapper.writeValueAsString(testCustomer);
-        when(implBusinessService.saveCustomer(testCustomer)).thenReturn(testCustomer);
+        CustomerDto testCustomerDto = new CustomerDto("Dupont", "Robert", "5 chemin de Moulinsart 41700 cherveny", "0123456789", "dup.rob@gmail.com");
+        Customer testCustomer = new Customer(1L, "Dupont", "Robert", "5 chemin de Moulinsart 41700 cherveny", "0123456789", "dup.rob@gmail.com", null);
+
+        String requestContent = objectMapper.writeValueAsString(testCustomerDto);
+
+        when(customerMapper.mapToEntity(any(CustomerDto.class))).thenReturn(testCustomer);
+        when(implBusinessService.saveCustomer(any(Customer.class))).thenReturn(testCustomer);
+
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/api/customer")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestContent))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestContent))
                 .andExpect(status().isCreated())
                 .andReturn();
+
+        // Vérifiez la réponse pour s'assurer qu'elle contient bien les données attendues
+        String jsonResponse = mvcResult.getResponse().getContentAsString();
+        Customer responseCustomer = objectMapper.readValue(jsonResponse, Customer.class);
+        assertEquals("Dupont", responseCustomer.getName());
+        assertEquals("Robert", responseCustomer.getFirstName());
+        assertNotNull(responseCustomer.getId());
 
     }
 
@@ -84,9 +114,14 @@ class OrderControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Customer testMartine = new Customer(1L, "Huguette", "Martine", "10 rue des mimosas 19000 Tulle", "0123456789", "hug.martine25@gmail.com", null);
+        OrderDto orderDto = new OrderDto(new Date(), 5000, testMartine);
         Order testOrder = new Order(null, new Date(), 5000, testMartine, null);
-        String requestContent = objectMapper.writeValueAsString(testOrder);
-        when(implBusinessService.saveOrder(testOrder)).thenReturn(testOrder);
+
+        String requestContent = objectMapper.writeValueAsString(orderDto);
+
+        when(orderMapper.mapToEntity(any(OrderDto.class))).thenReturn(testOrder);
+        when(implBusinessService.saveOrder(any(Order.class))).thenReturn(testOrder);
+
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestContent))
@@ -100,10 +135,15 @@ class OrderControllerTest {
 
         Customer testRaymond = new Customer(1L, "Dubarre", "Raymond", "chemin des 6 bières 24000 Perigueux", "6666666666", "bourre.galette@sfr.fr", null);
         Order testOrder = new Order(1L, new Date(), 10000, testRaymond, null);
-        Training oenologie = new Training(1L, "oenologie", "Devenez incollable sur les vins et les bières", 2000, 1, false,true , 10 ,"", null);
+        Training oenologie = new Training(1L, "oenologie", "Devenez incollable sur les vins et les bières", 2000, 1, false, true, 10, "", null);
+        OrderItemDto orderItemDto = new OrderItemDto(5, 2000, oenologie, testOrder);
         OrderItem testOrderItem = new OrderItem(null, 5, 2000, oenologie, testOrder);
-        String requestContent = objectMapper.writeValueAsString(testOrderItem);
-        when(implBusinessService.saveOrderItem(testOrderItem)).thenReturn(testOrderItem);
+
+        String requestContent = objectMapper.writeValueAsString(orderItemDto);
+
+        when(orderItemMapper.mapToEntity(any(OrderItemDto.class))).thenReturn(testOrderItem);
+        when(implBusinessService.saveOrderItem(any(OrderItem.class))).thenReturn(testOrderItem);
+
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/api/orderItem")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestContent))
